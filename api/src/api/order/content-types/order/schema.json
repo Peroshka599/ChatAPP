@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "Order"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "Payment_Details": {
+      "type": "json",
+      "required": true
+    },
+    "Date_Time": {
+      "type": "datetime"
+    },
+    "UUID": {
+      "type": "uid"
+    }
+  }
+}
