@@ -1,6 +1,14 @@
-import React from 'react'
+"use client"
+import React, { useState, useContext } from 'react'
 import { BsCart } from "react-icons/bs"
+import { BiLogIn } from "react-icons/bi"
+import { FaUserAlt } from "react-icons/Fa"
+import Link from 'next/link'
+import { authContext } from './Context'
+
 const Headers = () => {
+    const context = useContext(authContext);
+    const [displayLoginSection, setDisplayLoginSection] = useState(false);
     return (
         <header className="text-gray-400 bg-gray-900 body-font">
             <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -11,14 +19,28 @@ const Headers = () => {
                     <span className="ml-3 text-xl">Tailblocks</span>
                 </a>
                 <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-                    <a className="mr-5 hover:text-white">Home</a>
-                    <a className="mr-5 hover:text-white">About</a>
-                    <a className="mr-5 hover:text-white">Contact Us</a>
-                    <a className="mr-5 hover:text-white">Docs</a>
+                    <a className="mr-5 hover:text-white cursor-pointer">Home</a>
+                    <a className="mr-5 hover:text-white cursor-pointer">About</a>
+                    <a className="mr-5 hover:text-white cursor-pointer">Contact Us</a>
+                    <a className="mr-5 hover:text-white cursor-pointer">Docs</a>
                 </nav>
-                <button className="inline-flex items-center bg-gray-800 h-[30px] border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded-full text-base mt-4 md:mt-0">
-                    <BsCart />
-                </button>
+                <div className='flex items-center gap-3'>
+                    <button className="cursor-pointer inline-flex items-center border-0 py-1 px-3">
+                        <BsCart size={20} />
+                    </button>
+                    {!context.isUserLoggedin && <div className='login cursor-pointer relative'
+                        onMouseEnter={() => { setDisplayLoginSection(!displayLoginSection) }}
+                        onMouseLeave={() => { setDisplayLoginSection(!displayLoginSection) }}
+                    >
+                        <BiLogIn size={25} />
+                        {displayLoginSection && <div className='login-section flex flex-col gap-3 px-3 absolute bg-gray-900 rounded-sm'>
+                            <Link href="/Accounts/Login"><div className='pb-2 hover:opacity-70'>Login</div></Link>
+                            <Link href="/Accounts/Register"><div className='pb-2 hover:opacity-70'>Register</div></Link>
+                        </div>}
+                    </div>}
+                    {context.isUserLoggedin && <FaUserAlt size={18} className='cursor-pointer'/>}
+                </div>
+
             </div>
         </header>
     )
